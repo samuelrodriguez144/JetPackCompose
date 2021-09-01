@@ -1,23 +1,16 @@
 package com.guren.jetpackcompose
 
-import androidx.compose.foundation.layout.*
-import androidx.compose.material.Button
-import androidx.compose.material.Text
-import androidx.compose.material.TextField
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
+
+import androidx.compose.runtime.*
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navArgument
 import androidx.navigation.compose.rememberNavController
+import com.guren.jetpackcompose.module.DetailScreen
+import com.guren.jetpackcompose.module.MainScreen
+import com.guren.jetpackcompose.module.RealstateScreen
+
 
 @Composable
 fun Navigation() {
@@ -40,47 +33,10 @@ fun Navigation() {
             navBackStackEntry ->
             DetailScreen(name = navBackStackEntry.arguments?.getString("name"))
         }
-    }
-
-}
-
-@Composable
-fun MainScreen(navController:NavController){
-    var text by remember {
-        mutableStateOf("")
-    }
-    Column(
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 50.dp)
-    
-    ) {
-        TextField(
-            value = text,
-            onValueChange = {
-                text = it
-            },
-            modifier =  Modifier.fillMaxWidth(),
-            )
-        Spacer(modifier = Modifier.height(8.dp))
-        Button(onClick = {
-            navController.navigate(Screen.DetailScreen.withArgs(text))
-        },
-        modifier = Modifier.align(Alignment.End)) {
-            Text(text = "Detail Screen")
+        composable(route = Screen.RealstateScreen.route){
+            RealstateScreen()
         }
     }
-}
 
-@Composable
-fun DetailScreen(name:String?){
-    Box(
-        contentAlignment = Alignment.Center,
-        modifier = Modifier.fillMaxSize()){
-        
-        Text(text = "Hello $name")
-    }
 }
 
